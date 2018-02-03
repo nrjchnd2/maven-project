@@ -22,9 +22,15 @@ pipeline {
                 }
 
             }
-           
+           }
+            stage('deploy to staging'){
+                              
+                              steps{
+                                  build job:'PAC_deploy-to-staging'
+                                  
+                              }
 
-        }
+                          }
         
        
     }
