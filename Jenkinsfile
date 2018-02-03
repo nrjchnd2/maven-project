@@ -5,13 +5,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                bat 'mvn clean package'
             }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
+            post{
+                
+                success{
+                    
+                    echo 'now archiving..'
+                    archiveArtifacts artifacts:'**/target/*.war'
+                }
+
             }
+
         }
+        
        
     }
 }
