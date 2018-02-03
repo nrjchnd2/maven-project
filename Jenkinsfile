@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 
-                bat 'mvn clean package'
+                bat 'D:\\apache-maven-3.5.2-bin\\apache-maven-3.5.2\\bin\\mvn clean package'
                  echo 'Building..'
             }
             post{
