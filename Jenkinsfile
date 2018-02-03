@@ -1,10 +1,10 @@
 pipeline {
     agent any
-	tools{
-	    
-	    maven 'localMAVEN'
-	    jdk 'localJDK'
-	}
+    tools{
+        
+        maven 'localMAVEN'
+        jdk 'localJDK'
+    }
 
     stages {
         stage('Build') {
@@ -31,6 +31,32 @@ pipeline {
                               }
 
                           }
+             stage('deploy to production'){
+                 
+                 steps{
+                     
+                     timeout(time:5,unit:'DAYS'){
+                         input message:'Approve Production Deployement ?'
+                     }
+                     post{
+                         success{
+                             echo "deployed to production"
+                             build job:'PAC_deploy-to-production'
+                         }
+                         failure{
+                             
+                             echo "deployment to Production Failed !"
+                         }
+
+
+                         
+                     }
+
+
+                 }
+
+             }
+
         
        
     }
