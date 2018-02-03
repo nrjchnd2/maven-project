@@ -9,10 +9,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "${JAVA_HOME}"
-				echo "${M2_HOME}"
+               
                 bat 'mvn clean package'
                  echo 'Building..'
+            }
+            post{
+                
+                success{
+                    
+                    echo 'now archiving..'
+                    archiveArtifacts artifacts:'**/target/*.war'
+                }
+
             }
            
 
