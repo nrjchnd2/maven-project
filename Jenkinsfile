@@ -38,10 +38,12 @@ pipeline {
                      timeout(time:5,unit:'DAYS'){
                          input message:'Approve Production Deployement ?'
                      }
+                     build job:'PAC_deploy-to-production'
+                     }
                      post{
                          success{
                              echo "deployed to production"
-                             build job:'PAC_deploy-to-production'
+                             
                          }
                          failure{
                              
@@ -53,7 +55,7 @@ pipeline {
                      }
 
 
-                 }
+                 
 
              }
 
