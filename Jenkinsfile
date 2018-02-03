@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-               
-                bat 'mvn clean package'
+                def mvnHome = tool 'M3'
+                bat '${mvnHome}/bin/mvn clean package'
                  echo 'Building..'
             }
             post{
