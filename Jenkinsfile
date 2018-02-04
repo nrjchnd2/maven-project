@@ -5,61 +5,63 @@ pipeline {
         maven 'localMAVEN'
         jdk 'localJDK'
     }
-
-    stages {
-        stage('Build') {
-            steps {
-               
+    parameters{
+        
+        string(name:'tomcat-dev',defaultValue:'18.218.210.140',description:'staging server')
+        string(name:'tomcat-prd',defaultValue:'18.220.180.153',description:'production server')
+    }
+    triggers{
+        
+        pollSCM('* * * * *')
+    }
+    stages{
+        
+        stage('build'){
+            steps{
+                
                 bat 'mvn clean package'
-                 echo 'Building..'
             }
             post{
-                
+                echo 'Now archiving'
                 success{
                     
-                    echo 'now archiving..'
                     archiveArtifacts artifacts:'**/target/*.war'
                 }
 
             }
-           }
-            stage('deploy to staging'){
-                              
-                              steps{
-                                  build job:'PAC_deploy-to-staging'
-                                  
-                              }
-
-                          }
-             stage('deploy to production'){
-                 
-                 steps{
-                     
-                     timeout(time:5,unit:'DAYS'){
-                         input message:'Approve Production Deployement ?'
-                     }
-                     build job:'PAC_deploy-to-production'
-                     }
-                     post{
-                         success{
-                             echo "deployed to production"
-                             
-                         }
-                         failure{
-                             
-                             echo "deployment to Production Failed !"
-                         }
 
 
-                         
-                     }
-
-
-                 
-
-             }
-
+            
+        }
         
-       
+        stage('deployement'){
+            
+            parallel{
+                
+                stage('deploy to staging'){
+                	steps{
+                	    bat 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps/'
+                	}
+
+                    
+                    
+                }
+                 stage('deploy to production'){
+                	steps{
+                	    bat 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-prd}:/var/lib/tomcat8/webapps/'
+                	}
+
+                    
+                    
+                }
+
+            }
+
+        }
+
+
     }
+
+
+
 }
