@@ -19,7 +19,7 @@ pipeline {
         stage('build'){
             steps{
                 
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
             post{
                 
@@ -40,7 +40,7 @@ pipeline {
                 
                 stage('deploy to staging'){
                 	steps{
-                	    bat 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps/'
+                	    sh 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-dev}:/var/lib/tomcat8/webapps/'
                 	}
 
                     
@@ -48,7 +48,7 @@ pipeline {
                 }
                  stage('deploy to production'){
                 	steps{
-                	    bat 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-prd}:/var/lib/tomcat8/webapps/'
+                	    sh 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-prd}:/var/lib/tomcat8/webapps/'
                 	}
 
                     
