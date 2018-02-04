@@ -45,7 +45,7 @@ pipeline {
                 }
                  stage('deploy to production'){
                 	steps{
-                	    bat 'scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-prd}:/var/lib/tomcat8/webapps/'
+                	    bat 'pscp -scp -i D:\\AWS\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat-prd}:/var/lib/tomcat8/webapps/'
                 	}
 
                     
