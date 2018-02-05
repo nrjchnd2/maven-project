@@ -36,7 +36,7 @@ pipeline {
         
         stage('deployement'){
             
-            parallel{
+           
                 
                 stage('deploy to staging'){
                 	steps{
@@ -49,7 +49,7 @@ pipeline {
                    
                 }
 
-            }
+            
 
         }
 
