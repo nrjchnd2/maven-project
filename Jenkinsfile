@@ -40,13 +40,15 @@ pipeline {
                 
                 stage('deploy to staging'){
                 	steps{
-                	    bat "pscp -scp C:\\Program Files (x86)\\Jenkins\\workspace\\Fully-Automated\\webapp\\target\\*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
+                	    bat "pscp -scp -i C:\\Program Files (x86)\\Jenkins\\tomcat-demo.pem C:\\Program Files (x86)\\Jenkins\\workspace\\Fully-Automated\\webapp\\target\\*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
                 	}
 
                     
                     
                 }
-                 
+                   
+                }
+
             }
 
         }
@@ -58,4 +60,3 @@ pipeline {
     
 
    
-}
