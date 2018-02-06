@@ -36,7 +36,7 @@ pipeline {
         
         stage('deployement'){
          	steps{
-                	    bat "pscp -i D:\\mykey.ppk C:\\Jenkins\\workspace\\Fully-Automated\\webapp\\target\\*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
+                	    bat "pscp -i D:\\mykey.ppk C:\\Program Files (x86)\\Jenkins\\workspace\\Fully-Automated\\webapp\\target\\*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
                 	}
 
                     
